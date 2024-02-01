@@ -84,6 +84,9 @@ const userSlice = createSlice({
             state.isLoggedIn = true;
         },
         addToCart: (state, action) => {
+        //    let data =  JSON.parse(JSON.stringify(state))
+        //    console.log(data);
+        //    return
             const existingProduct = state.currentUser.cartDetails.find(
                 (cartItem) => cartItem._id === action.payload._id
             );

@@ -16,3 +16,9 @@ p {
 ::-webkit-scrollbar {
     display: none;
 }
+.sliderContent{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.sliderContent:hover{
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(6,101,136,0.1741946778711485) 100%);
+}

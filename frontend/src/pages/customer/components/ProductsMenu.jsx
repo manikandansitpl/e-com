@@ -42,6 +42,7 @@ const ProductsMenu = ({ dropName }) => {
         );
     });
 
+
     const catHandler = (key) => {
         setAnchorEl(null);
         if (dropName === "Categories") {
@@ -93,8 +94,7 @@ const ProductsMenu = ({ dropName }) => {
                         }}
                         anchorEl={anchorEl}
                         open={open}
-                        onClose={handleClose}
-                    >
+                        onClose={handleClose}>
                         {uniqueItems.map((data) => (
                             <MenuItem onClick={() => { catHandler(data.subcategory) }} key={data._id}>
                                 {data.subcategory}

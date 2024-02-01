@@ -103,15 +103,14 @@ const addReview = async (req, res) => {
 const searchProduct = async (req, res) => {
     try {
         const key = req.params.key;
-
         let products = await Product.find({
             $or: [
                 { productName: { $regex: key, $options: 'i' } },
                 { category: { $regex: key, $options: 'i' } },
-                { subcategory: { $regex: key, $options: 'i' } }
+                { subcategory: { $regex: key, $options: 'i' } },
+                {brand :{$regex: key, $options:'i'}}
             ]
         }).populate("seller", "shopName");
-
         if (products.length > 0) {
             res.send(products);
         } else {

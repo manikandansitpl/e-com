@@ -32,6 +32,7 @@ const Cart = ({ setIsCartOpen }) => {
         dispatch(removeAllFromCart());
     };
 
+
     const totalQuantity = cartDetails.reduce((total, item) => total + item.quantity, 0);
     const totalOGPrice = cartDetails.reduce((total, item) => total + (item.quantity * item.price.mrp), 0);
     const totalNewPrice = cartDetails.reduce((total, item) => total + (item.quantity * item.price.cost), 0);
@@ -42,7 +43,6 @@ const Cart = ({ setIsCartOpen }) => {
     }
 
     const productBuyingHandler = (id) => {
-        console.log(currentUser);
         dispatch(updateCustomer(currentUser, currentUser._id));
         setIsCartOpen(false)
         navigate(`/product/buy/${id}`)

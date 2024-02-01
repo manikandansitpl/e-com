@@ -21,7 +21,6 @@ const ViewProduct = () => {
         dispatch(getProductDetails(productID));
     }, [productID, dispatch]);
 
-
     const [anchorElMenu, setAnchorElMenu] = useState(null);
 
     const handleOpenMenu = (event) => {

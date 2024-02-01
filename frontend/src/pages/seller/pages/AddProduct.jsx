@@ -3,9 +3,11 @@ import { Box, CircularProgress, Stack, TextField } from '@mui/material';
 import Popup from '../../../components/Popup';
 import { BlueButton } from '../../../utils/buttonStyles';
 import { useDispatch, useSelector } from 'react-redux';
-import { addStuff } from '../../../redux/userHandle';
+import { addStuff, getProducts } from '../../../redux/userHandle';
 import altImage from "../../../assets/altimg.png";
 import styled from 'styled-components';
+import ComboBox from '../../../components/AutoComplete';
+import ControllableStates from '../../../components/AutoComplete';
 
 const AddProduct = () => {
 
@@ -22,11 +24,26 @@ const AddProduct = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [tagline, setTagline] = useState("");
+
+  const [brand, setbrand] = useState("");
+  const [Size, setSize] = useState("");
+  const [type, settype] = useState("");
+  const [color, setcolor] = useState("");
+  const [AgeGroup, setAgeGroup] = useState("");
+  const [title, settitle] = useState("");
+  const [rating, setrating] = useState("");
+
   const seller = currentUser._id
 
   const [loader, setLoader] = useState(false);
   const [message, setMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const[reloader ,setReloader] =useState(false)
+
+
+
+ 
+
 
   const fields = {
     productName,
@@ -40,7 +57,18 @@ const AddProduct = () => {
     category,
     description,
     tagline,
-    seller
+    seller,
+    brand,
+    Size,
+    type,
+    color,
+    AgeGroup,
+    title,
+    reviews:[
+      {
+        rating:Number(rating)
+      }
+    ]
   };
 
   const submitHandler = (event) => {
@@ -48,6 +76,10 @@ const AddProduct = () => {
     setLoader(true);
     console.log(fields);
     dispatch(addStuff("ProductCreate", fields));
+    setTimeout(() => {
+      dispatch(getProducts());
+      setReloader(!reloader)
+    }, 1000);
   };
 
   useEffect(() => {
@@ -145,6 +177,85 @@ const AddProduct = () => {
                     shrink: true,
                   }}
                 />
+                 <TextField
+                  fullWidth
+                  label="Brand (optional)"
+                  value={brand}
+                  onChange={(event) => setbrand(event.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                 <TextField
+                  fullWidth
+                  label="Size (optional)"
+                  value={Size}
+                  onChange={(event) => setSize(event.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
+                 <TextField
+                  fullWidth
+                  label="Type (optional)"
+                  value={type}
+                  onChange={(event) => settype(event.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
+                <TextField
+                  fullWidth
+                  label="Color (optional)"
+                  value={color}
+                  onChange={(event) => setcolor(event.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
+                <TextField
+                  fullWidth
+                  label="Age Group (optional)"
+                  value={AgeGroup}
+                  onChange={(event) => setAgeGroup(event.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
+                <TextField
+                  fullWidth
+                  label="deals title"
+                  value={title}
+                  onChange={(event) => settitle(event.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
+                  <TextField
+                  fullWidth
+                  label="Rating Optional"
+                  placeholder='1 to 5 only'
+                  value={rating}
+                  type='number'
+                  onChange={(event) => {
+                    if(event.target.value > 5){
+                      setrating(5)
+                      alert('5 ratings only allowed')
+                    } else{
+                      setrating(event.target.value)
+                    }
+                  }}
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
                 <TextField
                   fullWidth
                   label="Discount Percent"
@@ -155,7 +266,7 @@ const AddProduct = () => {
                     shrink: true,
                   }}
                 />
-                <TextField
+                {/* <TextField
                   fullWidth
                   label="Category"
                   value={category}
@@ -164,8 +275,9 @@ const AddProduct = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                />
-                <TextField
+                /> */}
+                 <ControllableStates setCategory={setCategory} reloader={reloader} value={category} label="Category" type='Category'/>
+                {/* <TextField
                   fullWidth
                   label="Subcategory"
                   value={subcategory}
@@ -174,10 +286,14 @@ const AddProduct = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                />
+                /> */}
+
+                <ControllableStates setSubcategory={setSubcategory}  label="Subcategory"
+                  value={subcategory} type='subcategory'/>
                 <TextField
                   fullWidth
-                  label="Tagline"
+                  type='number'
+                  label="Stocks"
                   value={tagline}
                   onChange={(event) => setTagline(event.target.value)}
                   required

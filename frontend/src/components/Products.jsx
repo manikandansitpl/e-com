@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { Container, Grid, Pagination } from '@mui/material';
-import styled from 'styled-components';
+import { Box, Container, Grid, Pagination } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/userSlice';
 import { BasicButton } from '../utils/buttonStyles';
 import { useNavigate } from 'react-router-dom';
 import Popup from './Popup';
 import { addStuff } from '../redux/userHandle';
+
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import ControllableStates from './AutoComplete';
+import FilterComponent from './FilterComponent';
+import RangeSlider from '../pages/customer/components/RangeComponent';
+import FilterAutocomplete from './FilterAutoComplete';
 
 const Products = ({ productData }) => {
   const dispatch = useDispatch();
@@ -18,6 +24,7 @@ const Products = ({ productData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
+  const [category, setGategory] = useState("");
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -44,15 +51,56 @@ const Products = ({ productData }) => {
     setCurrentPage(value);
   };
 
-  if (responseSearch) {
-    return <div>Product not found</div>;
+  // if (responseSearch) {
+  //   return <div>Product not found</div>;
+  // }
+  
+  const clearAll =()=>{
+        console.log(currentItems)
   }
+
+
+  
+
 
   return (
     <>
-      <ProductGrid container spacing={3}>
+    <Box sx={{ width: '100%' }}>
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid item xs={12} lg={2} md={2} xl={2}>
+          {/* ///header */}
+          <Grid xs={12} style={{display:'flex',justifyContent:'space-between',padding:'10px',alignItems:'center'}}>
+            <Box style={{fontSize:'18px',fontWeight:'700'}}>Filter</Box>
+            <Box style={{cursor:'pointer',fontWeight:'500'}} onClick={()=>clearAll()}>clearAll</Box>
+          </Grid>
+
+          <Grid xs={12} style={{display:'flex',justifyContent:'space-between',padding:'10px',alignItems:'center'}}>
+            <Box style={{fontSize:'15px',fontWeight:'600'}}>CATEGORIES</Box>
+          </Grid>
+
+          <Grid xs={12} style={{display:'flex',justifyContent:'space-between',padding:'10px',alignItems:'center'}}>
+            <FilterComponent type='Category' clearAll={clearAll}/>
+          </Grid>
+
+          <Grid xs={12} style={{padding:'10px',alignItems:'center'}}>
+            <Box style={{fontSize:'15px',marginBottom:'5px'}}>Price Range :</Box>
+            <RangeSlider/>
+          </Grid>
+
+          <Grid xs={12} style={{padding:'10px',alignItems:'center'}}>
+            <Box style={{fontSize:'15px',marginBottom:'5px'}}>Brand :</Box>
+            <FilterAutocomplete/>
+          </Grid>
+
+        </Grid>
+        <Grid item xs={10}>
+          
+        </Grid>
+      </Grid>
+    </Box>
+      {/* <ProductGrid container >
         {currentItems.map((data, index) => (
-          <Grid item xs={12} sm={6} md={4}
+          <Grid item xs={12} sm={2} md={6} lg={4}
             key={index}
             onClick={() => navigate("/product/view/" + data._id)}
             sx={{ cursor: "pointer" }}
@@ -107,54 +155,54 @@ const Products = ({ productData }) => {
         />
       </Container>
 
-      <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+      <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} /> */}
     </>
   )
 };
 
 export default Products;
 
-const ProductContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px;
-`;
+// const ProductContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   padding: 16px;
+// `;
 
-const ProductGrid = styled(Grid)`
-  display: flex;
-  align-items: center;
-`;
+// const ProductGrid = styled(Grid)`
+//   display: flex;
+//   align-items: center;
+// `;
 
-const ProductImage = styled.img`
-  width: 200px;
-  height: auto;
-  margin-bottom: 8px;
-`;
+// const ProductImage = styled.img`
+//   width: 200px;
+//   height: auto;
+//   margin-bottom: 8px;
+// `;
 
-const ProductName = styled.p`
-  font-weight: bold;
-  text-align: center;
-`;
+// const ProductName = styled.p`
+//   font-weight: bold;
+//   text-align: center;
+// `;
 
-const PriceMrp = styled.p`
-  margin-top: 8px;
-  text-align: center;
-  text-decoration: line-through;
-  color: #525050;
-`;
+// const PriceMrp = styled.p`
+//   margin-top: 8px;
+//   text-align: center;
+//   text-decoration: line-through;
+//   color: #525050;
+// `;
 
-const PriceCost = styled.h3`
-  margin-top: 8px;
-  text-align: center;
-`;
+// const PriceCost = styled.h3`
+//   margin-top: 8px;
+//   text-align: center;
+// `;
 
-const PriceDiscount = styled.p`
-  margin-top: 8px;
-  text-align: center;
-  color: darkgreen;
-`;
+// const PriceDiscount = styled.p`
+//   margin-top: 8px;
+//   text-align: center;
+//   color: darkgreen;
+// `;
 
-const AddToCart = styled.div`
-  margin-top: 16px;
-`;
+// const AddToCart = styled.div`
+//   margin-top: 16px;
+// `;

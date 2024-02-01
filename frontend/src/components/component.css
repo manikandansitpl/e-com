@@ -1,0 +1,86 @@
+.user-search-container{
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+
+.user-search-input{
+    width: -webkit-fill-available;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+.user-search-input >div > input{
+    border: none;
+    height: 20px;
+    padding: 5px;
+    width: 94%;
+
+}
+.user-search-input > div >input:focus{
+    outline: none;
+    border: none;
+}
+.search-list{
+    max-height: 200px;
+    width: 90%;
+    overflow-y: scroll;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    background-color: #fff;
+    z-index: 2;
+}
+.user-search-input > div >input:focus .search-list{
+    border: 1px solid #ccc;
+}
+.search-list > li{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+}
+.search-list > li:last-child{
+    border-bottom: none;
+}
+
+.search-list > li:hover{
+    background-color: #ccc;
+}
+.user-pill{
+height: 20px;
+display: flex;
+align-items: center;
+gap: 5px;
+background-color: black;
+color: #fff;
+padding: 5px 10px;
+border-radius: 16px;
+cursor: pointer;
+}
+
+.user-pill > span{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.filterComponent > input{
+    border: none;
+    height: 20px;
+    padding: 5px;
+    width: 94%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+.filterComponent > input:focus{
+    outline: none;
+}
