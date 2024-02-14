@@ -6,7 +6,7 @@ import "react-multi-carousel/lib/styles.css";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, removeFromCart } from '../redux/userSlice';
+import { addToCart, removeFromCart, setFilteredProductsFilterPage } from '../redux/userSlice';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import { updateCustomer } from '../redux/userHandle';
@@ -43,7 +43,6 @@ const Slide = memo(({ products, title }) => {
             setShowPopup(false)
         }, 4000);
     };
-
 
     const productBuyingHandler = (id) => {
         dispatch(updateCustomer(currentUser, currentUser._id));
@@ -91,7 +90,7 @@ const Slide = memo(({ products, title }) => {
                         return (
                             <Box key={index}>
                                 <Box className='sliderContent' textAlign="center" style={{ padding: '25px 15px' }}>
-                                    <Link to={`/product/view/${product._id}`} style={{ textDecoration: 'none' }}>
+                                    <Link onClick={()=>dispatch(setFilteredProductsFilterPage(""))} to={`/Products?product=${product.subcategory}&id=${product._id}`} style={{ textDecoration: 'none' }}>
                                         <Image src={product.productImage} />
                                         <TitleText style={{ fontWeight: 600, color: '#212121' }}>{product.productName}</TitleText>
                                         <TextContainer>

@@ -25,6 +25,8 @@ const initialState = {
     productDetails: {},
     productDetailsCart: {},
     filteredProducts: [],
+    filteredProductsSearch:[],
+    filteredProductsfilterPage:[],
     customersList: [],
 };
 
@@ -87,7 +89,7 @@ const userSlice = createSlice({
         //    let data =  JSON.parse(JSON.stringify(state))
         //    console.log(data);
         //    return
-            const existingProduct = state.currentUser.cartDetails.find(
+            const existingProduct = state.currentUser?.cartDetails.find(
                 (cartItem) => cartItem._id === action.payload._id
             );
 
@@ -95,13 +97,13 @@ const userSlice = createSlice({
                 existingProduct.quantity += 1;
             } else {
                 const newCartItem = { ...action.payload };
-                state.currentUser.cartDetails.push(newCartItem);
+                state.currentUser?.cartDetails.push(newCartItem);
             }
 
-            updateCartDetailsInLocalStorage(state.currentUser.cartDetails);
+            updateCartDetailsInLocalStorage(state.currentUser?.cartDetails);
         },
         removeFromCart: (state, action) => {
-            const existingProduct = state.currentUser.cartDetails.find(
+            const existingProduct = state.currentUser?.cartDetails.find(
                 (cartItem) => cartItem._id === action.payload._id
             );
 
@@ -109,7 +111,7 @@ const userSlice = createSlice({
                 if (existingProduct.quantity > 1) {
                     existingProduct.quantity -= 1;
                 } else {
-                    const index = state.currentUser.cartDetails.findIndex(
+                    const index = state.currentUser?.cartDetails.findIndex(
                         (cartItem) => cartItem._id === action.payload._id
                     );
                     if (index !== -1) {
@@ -275,6 +277,18 @@ const userSlice = createSlice({
             state.loading = false;
             state.error = null;
         },
+        setFilteredProductsSearch:(state,action)=>{
+            state.filteredProductsSearch = action.payload;
+            state.responseSearch = null;
+            state.loading = false;
+            state.error = null;
+        },
+        setFilteredProductsFilterPage:(state,action)=>{
+            state.filteredProductsfilterPage = action.payload;
+            state.responseSearch = null;
+            state.loading = false;
+            state.error = null;
+        },
         getSearchFailed: (state, action) => {
             state.responseSearch = action.payload;
             state.loading = false;
@@ -307,6 +321,8 @@ export const {
     getError,
     getSearchFailed,
     setFilteredProducts,
+    setFilteredProductsSearch,
+    setFilteredProductsFilterPage,
     getCustomersListFailed,
     customersListSuccess,
     getSpecificProductsFailed,

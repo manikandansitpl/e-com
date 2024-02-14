@@ -89,10 +89,10 @@ const ViewProduct = () => {
                                             <ReviewCard key={index}>
                                                 <ReviewCardDivision>
                                                     <Avatar sx={{ width: "60px", height: "60px", marginRight: "1rem", backgroundColor: generateRandomColor(review._id) }}>
-                                                        {String(review.reviewer.name).charAt(0)}
+                                                        {String(review?.reviewer?.name).charAt(0)}
                                                     </Avatar>
                                                     <ReviewDetails>
-                                                        <Typography variant="h6">{review.reviewer.name}</Typography>
+                                                        <Typography variant="h6">{review?.reviewer?.name}</Typography>
                                                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
 
                                                             <Typography variant="body2">
@@ -100,9 +100,9 @@ const ViewProduct = () => {
                                                             </Typography>
                                                         </div>
                                                         <Typography variant="subtitle1">Rating: {review.rating}</Typography>
-                                                        <Typography variant="body1">{review.comment}</Typography>
+                                                        <Typography variant="body1">{review?.comment}</Typography>
                                                     </ReviewDetails>
-                                                    {review.reviewer._id === reviewer &&
+                                                    {review?.reviewer?._id === reviewer &&
                                                         <>
                                                             <IconButton onClick={handleOpenMenu} sx={{ width: "4rem", color: 'inherit', p: 0 }}>
                                                                 <MoreVert sx={{ fontSize: "2rem" }} />
@@ -129,7 +129,7 @@ const ViewProduct = () => {
                                                                     <Typography textAlign="center">Edit</Typography>
                                                                 </MenuItem>
                                                                 <MenuItem onClick={() => {
-                                                                    deleteHandler(review._id)
+                                                                    deleteHandler(review?._id)
                                                                     handleCloseMenu()
                                                                 }}>
                                                                     <Typography textAlign="center">Delete</Typography>

@@ -21,6 +21,9 @@ const AddProduct = () => {
   const [discountPercent, setDiscountPercent] = useState("");
   const [subcategory, setSubcategory] = useState("");
   const [productImage, setProductImage] = useState("");
+  const [productImage1, setProductImage1] = useState("");
+  const [productImage2, setProductImage2] = useState("");
+  const [productImage3, setProductImage3] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [tagline, setTagline] = useState("");
@@ -32,6 +35,9 @@ const AddProduct = () => {
   const [AgeGroup, setAgeGroup] = useState("");
   const [title, settitle] = useState("");
   const [rating, setrating] = useState("");
+  
+  const [ram, setRam] = useState("");
+  const [rom, setRom] = useState("");
 
   const seller = currentUser._id
 
@@ -54,6 +60,9 @@ const AddProduct = () => {
     },
     subcategory,
     productImage,
+    productImage1,
+    productImage2,
+    productImage3,
     category,
     description,
     tagline,
@@ -131,6 +140,36 @@ const AddProduct = () => {
                   label="Product Image URL"
                   value={productImage}
                   onChange={(event) => setProductImage(event.target.value)}
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                   <TextField
+                  fullWidth
+                  label="Product Image URL 1"
+                  value={productImage1}
+                  onChange={(event) => setProductImage1(event.target.value)}
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                   <TextField
+                  fullWidth
+                  label="Product Image URL 2"
+                  value={productImage2}
+                  onChange={(event) => setProductImage2(event.target.value)}
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                    <TextField
+                  fullWidth
+                  label="Product Image URL 3"
+                  value={productImage3}
+                  onChange={(event) => setProductImage3(event.target.value)}
                   required
                   InputLabelProps={{
                     shrink: true,
@@ -266,6 +305,27 @@ const AddProduct = () => {
                     shrink: true,
                   }}
                 />
+                 <TextField
+                              fullWidth
+                              label="Ram"
+                              value={ram}
+                              onChange={(event) => setRam(event.target.value)}
+                              required
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                            />
+                            
+                            <TextField
+                              fullWidth
+                              label="Internal Memory"
+                              value={rom}
+                              onChange={(event) => setRom(event.target.value)}
+                              required
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                            />
                 {/* <TextField
                   fullWidth
                   label="Category"

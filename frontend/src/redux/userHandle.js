@@ -24,6 +24,8 @@ import {
     getSpecificProductsFailed,
     specificProductSuccess,
     updateCurrentUser,
+    setFilteredProductsSearch,
+    setFilteredProductsFilterPage,
 } from './userSlice';
 
 export const authUser = (fields, role, mode) => async (dispatch) => {
@@ -136,9 +138,11 @@ export const getProducts = () => async (dispatch) => {
         const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/getProducts`);
         if (result.data.message) {
             dispatch(getProductsFailed(result.data.message));
+            dispatch(setFilteredProductsFilterPage(result.data.message));
         }
         else {
             dispatch(productSuccess(result.data));
+            dispatch(setFilteredProductsFilterPage(result.data));
         }
     } catch (error) {
         dispatch(getError(error));
@@ -204,7 +208,65 @@ export const getSearchedProducts = (address, key) => async (dispatch) => {
             dispatch(getSearchFailed(result.data.message));
         }
         else {
+            if(!result.data.message){
             dispatch(setFilteredProducts(result.data));
+            }
+        }
+
+    } catch (error) {
+        dispatch(getError(error));
+    }
+}
+
+
+export const getSearchedProductFilerPage = (address, key) => async (dispatch) => {
+    dispatch(getRequest());
+
+    try {
+        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/${address}/${key}`);
+        if (result.data.message) {
+            dispatch(setFilteredProductsFilterPage(result.data.message));
+        }
+        else {
+            if(!result.data.message){
+            dispatch(setFilteredProductsFilterPage(result.data));
+            }
+        }
+
+    } catch (error) {
+        dispatch(getError(error));
+    }
+}
+
+export const getSearchedProductsSearchBar = (address, key) => async (dispatch) => {
+    dispatch(getRequest());
+
+    try {
+        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/${address}/${key}`);
+        if (result.data.message) {
+            dispatch(setFilteredProductsSearch(result.data.message));
+        }
+        else {
+         
+            dispatch(setFilteredProductsSearch(result.data));
+        }
+
+    } catch (error) {
+        dispatch(getError(error));
+    }
+}
+
+export const getCommonSearchedProductsSearchBar = (address, key) => async (dispatch) => {
+    dispatch(getRequest());
+
+    try {
+        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/${address}/${key}`);
+        if (result.data.message) {
+            dispatch(setFilteredProductsFilterPage(result.data.message));
+        }
+        else {
+         
+            dispatch(setFilteredProductsFilterPage(result.data));
         }
 
     } catch (error) {

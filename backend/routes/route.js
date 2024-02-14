@@ -22,6 +22,9 @@ const {
     addReview,
     getInterestedCustomers,
     getAddedToCartProducts,
+    filterProduct,
+    getBrandFilter,
+    getProductFilter
 } = require('../controllers/productController.js');
 
 const {
@@ -41,6 +44,9 @@ const {
 // Seller
 router.post('/SellerRegister', sellerRegister);
 router.post('/SellerLogin', sellerLogIn);
+router.post('/Filter', filterProduct);
+router.get('/getBrand', getBrandFilter);
+router.get('/getProductFilter', getProductFilter);
 
 // Product
 router.post('/ProductCreate', productCreate);

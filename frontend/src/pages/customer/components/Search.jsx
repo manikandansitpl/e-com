@@ -3,7 +3,8 @@ import { InputBase, Box, styled, Paper, List, ListItem, ListItemText, CircularPr
 import SearchIcon from '@mui/icons-material/Search';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSearchedProducts } from '../../../redux/userHandle';
+import { getSearchedProducts, getSearchedProductsSearchBar } from '../../../redux/userHandle';
+import { setFilteredProductsSearch } from '../../../redux/userSlice';
 
 const Search = () => {
     const navigate = useNavigate();
@@ -11,29 +12,27 @@ const Search = () => {
     const location = useLocation();
     const [searchTerm, setSearchTerm] = useState("");
     const [showDropdown, setShowDropdown] = useState(false);
-    const { filteredProducts } = useSelector(state => state.user);
+    const { filteredProducts, filteredProductsSearch } = useSelector(state => state.user);
     const [loading, setLoading] = useState(false);
     const dropdownRef = useRef(null); // Create a ref for the dropdown
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
             if (searchTerm) {
-                console.log('text')
                 setLoading(true);
-                dispatch(getSearchedProducts("searchProduct", searchTerm));
+                dispatch(getSearchedProductsSearchBar("searchProduct", searchTerm));
                 setShowDropdown(true);
                 setLoading(false);
             } else {
                 setShowDropdown(false);
             }
-            
+
         }, 500); // Debounce delay for 500ms
 
         return () => {
             clearTimeout(delayDebounceFn);
         };
     }, [searchTerm]);
-
     useEffect(() => {
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -64,25 +63,27 @@ const Search = () => {
         };
     }, [location]); // Dependency array includes location
 
-
     const handleSearch = (Product) => {
         setShowDropdown(false);
-        setSearchTerm('')
-        if(Product){
+        if (Product) {
             dispatch(getSearchedProducts("searchProduct", Product));
             if (location.pathname !== "/ProductSearch") {
-                navigate("/ProductSearch");
+                navigate(`/ProductSearch/${Product}`);
                 setShowDropdown(false);
+                setSearchTerm('');
             }
-        }else{
-            dispatch(getSearchedProducts("searchProduct", searchTerm));
-            if (location.pathname !== "/ProductSearch") {
-                navigate("/ProductSearch");
-            }
+            
         }
-       
-    };
+        // else{
+        //     if(searchTerm.length > 1){
+        //         dispatch(getSearchedProducts("searchProduct", searchTerm));
+        //     }
+        //     if (location.pathname !== "/ProductSearch") {
+        //         navigate("/ProductSearch");
+        //     }
+        // }
 
+    };
     return (
         <SearchContainer>
             <InputSearchBase
@@ -91,18 +92,21 @@ const Search = () => {
                 onChange={(e) => {
                     if (e.target.value) {
                         setSearchTerm(e.target.value)
-                        dispatch(getSearchedProducts("searchProduct", e.target.value));
                     } else {
                         setSearchTerm("")
+                    }
+                    if (e.target.value.length > 0) {
+                        dispatch(getSearchedProductsSearchBar("searchProduct", e.target.value));
                     }
                 }}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                         handleSearch();
+                        dispatch(getSearchedProducts("searchProduct", e.target.value));
                     }
                 }}
             />
-            <SearchIconWrapper onClick={handleSearch}>
+            <SearchIconWrapper onClick={() => handleSearch(searchTerm)}>
                 <SearchIcon sx={{ color: "#4d1c9c" }} />
             </SearchIconWrapper>
             {showDropdown && (
@@ -111,7 +115,7 @@ const Search = () => {
                         <CircularProgress size={24} />
                     ) : (
                         <List>
-                            {filteredProducts?.map((result, index) => (
+                            {typeof filteredProductsSearch !== 'string' ? (filteredProductsSearch && filteredProductsSearch?.map && filteredProductsSearch?.map((result, index) => (
                                 <ListItem button key={index} onClick={() => {
                                     setSearchTerm(result.productName);
                                     handleSearch(result.productName);
@@ -122,9 +126,9 @@ const Search = () => {
                                             src={result.productImage}
                                         />
                                     </ListItemAvatar>
-                                    <ListItemText primary={result.productName} secondary={result.category}/>
+                                    <ListItemText primary={result.productName} secondary={result.category} />
                                 </ListItem>
-                            ))}
+                            ))) : <span style={{ display: 'flex', justifyContent: 'center' }}>{filteredProductsSearch}</span>}
                         </List>
                     )}
                 </Dropdown>

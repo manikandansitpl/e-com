@@ -9,8 +9,8 @@ function Rating({product}) {
   let rating = product?.reviews[0]?.rating || 0;
   return (
     <ReactStars
-    count={rating}
-    value={rating}
+    count={rating? rating : ""}
+    value={rating? rating : ""}
     onChange={ratingChanged}
     size={18}
     activeColor= "#FED600" 

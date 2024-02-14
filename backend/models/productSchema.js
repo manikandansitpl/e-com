@@ -25,9 +25,14 @@ const productSchema = new mongoose.Schema(
         color:String,
         AgeGroup:String,
         title:String,
+        ram:String,
+        rom:String,
         productImage: {
             type: String
         },
+        productImage1:String,
+        productImage2:String,
+        productImage3:String,
         category: {
             type: String
         },

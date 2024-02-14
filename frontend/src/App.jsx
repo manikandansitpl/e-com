@@ -47,7 +47,7 @@ const App = () => {
             <Route path="/product/view/:id" element={<ViewProduct />} />
 
             <Route path="/Search" element={<CustomerSearch mode="Mobile" />} />
-            <Route path="/ProductSearch" element={<CustomerSearch mode="Desktop" />} />
+            <Route path="/ProductSearch/:id" element={<CustomerSearch mode="Desktop" />} />
 
             <Route path="/Customerregister" element={<AuthenticationPage mode="Register" role="Customer" />} />
             <Route path="/Customerlogin" element={<AuthenticationPage mode="Login" role="Customer" />} />
