@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 const path = require('path');
 const app = express()
-const Routes = require("./routes/route.js")
+const Routes = require("../backend/routes/route")
 
 const PORT = process.env.PORT || 5000
 
@@ -13,7 +13,6 @@ dotenv.config();
 app.use(express.json({ limit: '10mb' }))
 app.use(cors())
 
-app.use(express.static(path.join(__dirname,'/frontend/build')))
 
 
 mongoose
@@ -28,6 +27,8 @@ app.use('/', Routes);
 
 // Catch-all handler for serving index.html
 if(process.env.NODE_ENV === 'PRODUCTION'){
+app.use(express.static(path.join(__dirname,'../frontend/build')))
+
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'), (err) => {
           if (err) {
