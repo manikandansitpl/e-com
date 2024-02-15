@@ -133,9 +133,9 @@ export const getProductsbySeller = (id) => async (dispatch) => {
 
 export const getProducts = () => async (dispatch) => {
     dispatch(getRequest());
-
+    // const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/getProducts`);
     try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/getProducts`);
+        const result = await axios.get(`getProducts`);
         if (result.data.message) {
             dispatch(getProductsFailed(result.data.message));
             dispatch(setFilteredProductsFilterPage(result.data.message));
