@@ -30,7 +30,6 @@ const getProductFilter = async (req, res) => {
     // Extract query parameters if they exist; otherwise set to undefined
 
     const {id, brand, color, subcategory, cost ,rating} = req.query;
-  console.log(cost);
     // Initialize the query conditions array
     let queryConditions = [];
 
@@ -68,7 +67,6 @@ const getProductFilter = async (req, res) => {
 
     // Construct the final query using $and only if there are conditions to apply
     let finalQuery = queryConditions.length > 0 ? { $and: queryConditions } : {};
-    console.log(finalQuery)
     try {
         let products = await Product.find(finalQuery);
         if (products.length > 0) {
@@ -166,6 +164,7 @@ const searchProduct = async (req, res) => {
                 { productName: { $regex: escapedInput, $options: 'i' } },
                 { subcategory: { $regex: escapedInput, $options: 'i' } },
                 {brand :{$regex: escapedInput, $options:'i'}},
+                {title :{$regex: escapedInput, $options:'i'}},
                 // {_id :key},
             ]
         }).populate("seller", "shopName");

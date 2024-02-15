@@ -60,7 +60,8 @@ const Slide = memo(({ products, title }) => {
 
                 <ViewAllButton
                     variant="contained"
-                    onClick={() => { navigate("/Products") }}
+                    onClick={() => {
+                         navigate(`/Products?title=${title}`);dispatch(setFilteredProductsFilterPage("")); }}
                 >
                     View All
                 </ViewAllButton>
@@ -82,7 +83,7 @@ const Slide = memo(({ products, title }) => {
                 dotListClass="custom-dot-list-style"
                 itemClass="carousel-item-padding-40-px">
                 {
-                    products.map((product, index) => {
+                    products?.filter(item => item?.title?.toLowerCase() === title?.toLowerCase())?.map((product, index) => {
                         // Find the product in the cart and get its quantity, default to 0 if not found
                         const productInCart = currentUser?.cartDetails?.find(item => item?._id === product?._id);
                         const productQuantity = productInCart ? productInCart?.quantity : 0;

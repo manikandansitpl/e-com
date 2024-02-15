@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/userSlice';
 import styled from 'styled-components';
-import { BasicButton } from '../utils/buttonStyles';
-import { getProductDetails, updateStuff } from '../redux/userHandle';
+// import { BasicButton } from '../utils/buttonStyles';
+import { getProductDetails, updateCustomer, updateStuff } from '../redux/userHandle';
 import { Avatar, Card, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { generateRandomColor, timeAgo } from '../utils/helperFunctions';
 import { MoreVert } from '@mui/icons-material';
+import Magnifire from '../components/Magnifire';
+import ImageList from '../components/ImageList';
+import { GlobalState } from '../utils/Context';
+import StarIcon from '@mui/icons-material/Star';
 
 const ViewProduct = () => {
     const dispatch = useDispatch();
     const params = useParams();
+    const navigate = useNavigate()
     const productID = params.id;
-
+    const { selectedImageForProductView,setselectedImageForProductView } = GlobalState();
 
     const { currentUser, currentRole, productDetails, loading, responseDetails } = useSelector(state => state.user);
 
-    useEffect(() => {
-        dispatch(getProductDetails(productID));
-    }, [productID, dispatch]);
-
+  
     const [anchorElMenu, setAnchorElMenu] = useState(null);
 
     const handleOpenMenu = (event) => {
@@ -37,6 +39,16 @@ const ViewProduct = () => {
         dispatch(updateStuff(fields, productID, "deleteProductReview"));
     };
 
+    const productBuyingHandler = (id) => {
+        dispatch(updateCustomer(currentUser, currentUser._id));
+        navigate(`/product/buy/${id}`)
+    }
+
+    useEffect(() => {
+        dispatch(getProductDetails(productID));
+    }, [productID, dispatch]);
+    
+
     const reviewer = currentUser && currentUser._id
 
     return (
@@ -51,25 +63,15 @@ const ViewProduct = () => {
                             :
                             <>
                                 <ProductContainer>
-                                    <ProductImage src={productDetails && productDetails.productImage} alt={productDetails && productDetails.productName} />
-                                    <ProductInfo>
-                                        <ProductName>{productDetails && productDetails.productName}</ProductName>
-                                        <PriceContainer>
-                                            <PriceCost>₹{productDetails && productDetails.price && productDetails.price.cost}</PriceCost>
-                                            <PriceMrp>₹{productDetails && productDetails.price && productDetails.price.mrp}</PriceMrp>
-                                            <PriceDiscount>{productDetails && productDetails.price && productDetails.price.discountPercent}% off</PriceDiscount>
-                                        </PriceContainer>
-                                        <Description>{productDetails && productDetails.description}</Description>
-                                        <ProductDetails>
-                                            <p>Category: {productDetails && productDetails.category}</p>
-                                            <p>Subcategory: {productDetails && productDetails.subcategory}</p>
-                                        </ProductDetails>
-                                    </ProductInfo>
-                                </ProductContainer>
+                                    <ImageContainer>
+                                        <InnerImageContainer>
+                                        <ImageList productDetails={productDetails} />
+                                        <Magnifire image={selectedImageForProductView} />
+                                        </InnerImageContainer>
 
                                 {
                                     currentRole === "Customer" &&
-                                    <>
+                                    <ButtonMainContainer>
                                         <ButtonContainer>
                                             <BasicButton
                                                 onClick={() => dispatch(addToCart(productDetails))}
@@ -77,8 +79,50 @@ const ViewProduct = () => {
                                                 Add to Cart
                                             </BasicButton>
                                         </ButtonContainer>
-                                    </>
+
+                                        <ButtonContainer>
+                                            <BasicButton
+                                                 onClick={() => productBuyingHandler(productDetails._id)}
+                                            >
+                                               Buy
+                                            </BasicButton>
+                                        </ButtonContainer>
+                                    </ButtonMainContainer>
                                 }
+                                    </ImageContainer>
+                                    {/* <ProductImage  alt={productDetails && productDetails.productName} /> */}
+                                    <ProductInfo>
+                                        <ProductName>{productDetails && productDetails.productName}</ProductName>
+                                        <ProductRatingsReview>4.4 &#9733;</ProductRatingsReview>
+                                        <PriceContainer>
+                                            <PriceCost>₹{productDetails && productDetails.price && productDetails.price.cost}</PriceCost>
+                                            <PriceMrp>₹{productDetails && productDetails.price && productDetails.price.mrp}</PriceMrp>
+                                            <PriceDiscount>{productDetails && productDetails.price && productDetails.price.discountPercent}% off</PriceDiscount>
+                                        </PriceContainer>
+                                        <Description>{productDetails && productDetails.description}</Description>
+                                        <ProductDetails>
+                                            {/* <p>Category: {productDetails && productDetails.category}</p> */}
+                                            {/* <p>Subcategory: {productDetails && productDetails.subcategory}</p> */}
+                                        </ProductDetails>
+                                        <Ram>Ram : 
+                                            <RamBox>{productDetails?.ram}gb</RamBox>
+                                        <RamBox>16gb</RamBox>
+                                        </Ram>
+
+                                        <Rom>Internal Storage : 
+                                            <RomBox>{productDetails?.rom}gb</RomBox>
+                                        <RamBox>256gb</RamBox>
+                                        </Rom>
+
+                                        <Color>Color : 
+                                            <ColorBox>{productDetails?.color}</ColorBox>
+                                        <ColorBox>blue</ColorBox>
+                                        </Color>
+
+                                    </ProductInfo>
+                                </ProductContainer>
+
+                            
                                 <ReviewWritingContainer>
                                     <Typography variant="h4">Reviews</Typography>
                                 </ReviewWritingContainer>
@@ -159,14 +203,24 @@ export default ViewProduct;
 
 const ProductContainer = styled.div`
     display: flex;
-    flex-direction: column;
     margin: 20px;
     justify-content: center;
     align-items: center;
-    @media (min-width: 768px) {
-        flex-direction: row;
+    @media (max-width: 768px) {
+        flex-direction: column;
     }
 `;
+
+const ImageContainer = styled.div`
+display:flex;
+flex-direction:column;
+justify-content:space-around;
+align-items:center;
+height:auto
+`
+const InnerImageContainer= styled.div`
+display:flex;
+`
 
 const ProductImage = styled.img`
     max-width: 300px;
@@ -177,6 +231,7 @@ const ProductImage = styled.img`
 const ProductInfo = styled.div`
     display: flex;
     flex-direction: column;
+    width:60%
 `;
 
 const ProductName = styled.h1`
@@ -188,6 +243,10 @@ const PriceContainer = styled.div`
     gap: 8px;
     margin-top: 8px;
 `;
+// const MagnifyContainer = styled.div`
+//   position:absolute;
+//   left:0
+//   `
 
 const PriceMrp = styled.p`
     margin-top: 8px;
@@ -215,12 +274,12 @@ const ProductDetails = styled.div`
 const ButtonContainer = styled.div`
     margin: 16px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 `;
 
 const ReviewWritingContainer = styled.div`
-    margin: 6rem;
+    // margin: 6rem;
     display: flex;
     gap: 2rem;
     justify-content: center;
@@ -250,4 +309,78 @@ const ReviewCardDivision = styled.div`
 
 const ReviewDetails = styled.div`
   flex: 1;
+`;
+
+const ProductRatingsReview = styled.label`
+line-height: normal;
+display: inline-block;
+color: #fff;
+padding: 2px 4px 2px 6px;
+border-radius: 3px;
+font-weight: 500;
+font-size: 12px;
+vertical-align: middle;
+background-color: #388e3c;
+width:fit-content;
+`
+const Ram = styled.div`
+ display:flex;
+ flex-direction:row;
+ align-items:center;
+ gap:5;
+ margin-bottom:10px;
+`
+const RamBox = styled.div`
+border : 1px solid silver;
+width:fit-content;
+padding:5px;
+margin-left:5px;
+cursor:pointer;
+`
+const Rom = styled.div`
+ display:flex;
+ flex-direction:row;
+ align-items:center;
+ gap:5;
+`
+const RomBox = styled.div`
+border : 1px solid silver;
+width:fit-content;
+padding:5px;
+margin-left:5px;
+cursor:pointer;
+`
+const Color = styled.div`
+ display:flex;
+ flex-direction:row;
+ align-items:center;
+ gap:5;
+ margin-top:10px;
+`
+const ColorBox = styled.div`
+border : 1px solid silver;
+width:fit-content;
+padding:5px;
+margin-left:5px;
+cursor:pointer;
+`
+
+const ButtonMainContainer = styled.div`
+display:flex;
+margin-left: 100px;
+`
+const BasicButton = styled.button`
+  && {
+    background-color: #4d1c9c;
+    padding:5px 7px;
+    width:100px;
+    font-size:14px;
+    font-weight:600;
+    border-radius:5px;
+    color: #fff;
+    &:hover {
+      background-color: #7a1ccb;
+      cursor:pointer;
+    }
+  }
 `;

@@ -30,7 +30,9 @@ const Products = memo(() => {
 
 const searchParams = new URLSearchParams(data.search)
 let id = searchParams.get('id');
+let title = searchParams.get('title');
 let product = searchParams.get('product');
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const [handleCheckBrand, setHandleCheackBrand] = useState('');
@@ -125,7 +127,9 @@ let product = searchParams.get('product');
   useEffect(()=>{
     getFilterdProd(id ,product);
   },[])
-
+useEffect(()=>{
+  dispatch(getSearchedProducts("searchProduct", title));
+},[title])
 
   return (
     <>

@@ -35,7 +35,7 @@ const AddProduct = () => {
   const [AgeGroup, setAgeGroup] = useState("");
   const [title, settitle] = useState("");
   const [rating, setrating] = useState("");
-  
+
   const [ram, setRam] = useState("");
   const [rom, setRom] = useState("");
 
@@ -44,11 +44,11 @@ const AddProduct = () => {
   const [loader, setLoader] = useState(false);
   const [message, setMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
-  const[reloader ,setReloader] =useState(false)
+  const [reloader, setReloader] = useState(false)
 
 
 
- 
+
 
 
   const fields = {
@@ -73,9 +73,11 @@ const AddProduct = () => {
     color,
     AgeGroup,
     title,
-    reviews:[
+    ram,
+    rom,
+    reviews: [
       {
-        rating:Number(rating)
+        rating: Number(rating)
       }
     ]
   };
@@ -145,32 +147,29 @@ const AddProduct = () => {
                     shrink: true,
                   }}
                 />
-                   <TextField
+                <TextField
                   fullWidth
                   label="Product Image URL 1"
                   value={productImage1}
                   onChange={(event) => setProductImage1(event.target.value)}
-                  required
                   InputLabelProps={{
                     shrink: true,
                   }}
                 />
-                   <TextField
+                <TextField
                   fullWidth
                   label="Product Image URL 2"
                   value={productImage2}
                   onChange={(event) => setProductImage2(event.target.value)}
-                  required
                   InputLabelProps={{
                     shrink: true,
                   }}
                 />
-                    <TextField
+                <TextField
                   fullWidth
                   label="Product Image URL 3"
                   value={productImage3}
                   onChange={(event) => setProductImage3(event.target.value)}
-                  required
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -216,7 +215,7 @@ const AddProduct = () => {
                     shrink: true,
                   }}
                 />
-                 <TextField
+                <TextField
                   fullWidth
                   label="Brand (optional)"
                   value={brand}
@@ -225,7 +224,7 @@ const AddProduct = () => {
                     shrink: true,
                   }}
                 />
-                 <TextField
+                {/* <TextField
                   fullWidth
                   label="Size (optional)"
                   value={Size}
@@ -233,9 +232,9 @@ const AddProduct = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                />
+                /> */}
 
-                 <TextField
+                <TextField
                   fullWidth
                   label="Type (optional)"
                   value={type}
@@ -254,7 +253,7 @@ const AddProduct = () => {
                     shrink: true,
                   }}
                 />
-
+                {/* 
                 <TextField
                   fullWidth
                   label="Age Group (optional)"
@@ -263,7 +262,7 @@ const AddProduct = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                />
+                /> */}
 
                 <TextField
                   fullWidth
@@ -275,17 +274,17 @@ const AddProduct = () => {
                   }}
                 />
 
-                  <TextField
+                <TextField
                   fullWidth
                   label="Rating Optional"
                   placeholder='1 to 5 only'
                   value={rating}
                   type='number'
                   onChange={(event) => {
-                    if(event.target.value > 5){
+                    if (event.target.value > 5) {
                       setrating(5)
                       alert('5 ratings only allowed')
-                    } else{
+                    } else {
                       setrating(event.target.value)
                     }
                   }}
@@ -305,27 +304,25 @@ const AddProduct = () => {
                     shrink: true,
                   }}
                 />
-                 <TextField
-                              fullWidth
-                              label="Ram"
-                              value={ram}
-                              onChange={(event) => setRam(event.target.value)}
-                              required
-                              InputLabelProps={{
-                                shrink: true,
-                              }}
-                            />
-                            
-                            <TextField
-                              fullWidth
-                              label="Internal Memory"
-                              value={rom}
-                              onChange={(event) => setRom(event.target.value)}
-                              required
-                              InputLabelProps={{
-                                shrink: true,
-                              }}
-                            />
+                <TextField
+                  fullWidth
+                  label="Ram"
+                  value={ram}
+                  onChange={(event) => setRam(event.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
+                <TextField
+                  fullWidth
+                  label="Internal Memory"
+                  value={rom}
+                  onChange={(event) => setRom(event.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
                 {/* <TextField
                   fullWidth
                   label="Category"
@@ -336,7 +333,7 @@ const AddProduct = () => {
                     shrink: true,
                   }}
                 /> */}
-                 <ControllableStates setCategory={setCategory} reloader={reloader} value={category} label="Category" type='Category'/>
+                <ControllableStates setCategory={setCategory} reloader={reloader} value={category} label="Category" type='Category' />
                 {/* <TextField
                   fullWidth
                   label="Subcategory"
@@ -348,8 +345,8 @@ const AddProduct = () => {
                   }}
                 /> */}
 
-                <ControllableStates setSubcategory={setSubcategory}  label="Subcategory"
-                  value={subcategory} type='subcategory'/>
+                <ControllableStates setSubcategory={setSubcategory} label="Subcategory"
+                  value={subcategory} type='subcategory' />
                 <TextField
                   fullWidth
                   type='number'

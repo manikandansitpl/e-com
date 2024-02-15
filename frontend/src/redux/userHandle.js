@@ -210,6 +210,7 @@ export const getSearchedProducts = (address, key) => async (dispatch) => {
         else {
             if(!result.data.message){
             dispatch(setFilteredProducts(result.data));
+            dispatch(setFilteredProductsFilterPage(result.data));
             }
         }
 

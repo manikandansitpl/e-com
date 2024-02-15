@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchedProducts, getSearchedProductsSearchBar } from '../../../redux/userHandle';
-import { setFilteredProductsSearch } from '../../../redux/userSlice';
+import { setFilteredProductsFilterPage, setFilteredProductsSearch } from '../../../redux/userSlice';
 
 const Search = () => {
     const navigate = useNavigate();
@@ -65,6 +65,7 @@ const Search = () => {
 
     const handleSearch = (Product) => {
         setShowDropdown(false);
+        dispatch(setFilteredProductsFilterPage(""));
         if (Product) {
             dispatch(getSearchedProducts("searchProduct", Product));
             if (location.pathname !== "/ProductSearch") {

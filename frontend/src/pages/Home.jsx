@@ -17,8 +17,6 @@ const Home = () => {
   const { productData, responseProducts, error } = useSelector((state) => state.user);
 
   const [showNetworkError, setShowNetworkError] = useState(false);
-
-
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -73,7 +71,7 @@ const Home = () => {
             </>
           ) : (
             <>
-              <Component>
+              {/* <Component>
                 <LeftComponent>
                   <Slide products={productData} title="Top Selection" />
                 </LeftComponent>
@@ -81,12 +79,16 @@ const Home = () => {
                 <RightComponent>
                   <img src={adURL} alt="" style={{ width: 217 }} />
                 </RightComponent>
-              </Component>
-
-              <Slide products={productData} title="Deals of the Day" />
-              <Slide products={productData} title="Suggested Items" />
+              </Component> */}
+              
+              {
+                productData?.length > 0 && productData?.filter((item,i,self)=>{
+                  return i === self?.findIndex(it => it?.title === item?.title)
+                }).map((prod,i,self) => <Slide products={productData} title={prod?.title} />)
+              }
+              {/* <Slide products={productData} title="Suggested Items" />
               <Slide products={productData} title="Discounts for You" />
-              <Slide products={productData} title="Recommended Items" />
+              <Slide products={productData} title="Recommended Items" /> */}
             </>
           )} 
         </>

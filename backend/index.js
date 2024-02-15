@@ -2,7 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
-
+const path = require('path');
 const app = express()
 const Routes = require("./routes/route.js")
 
@@ -13,6 +13,9 @@ dotenv.config();
 app.use(express.json({ limit: '10mb' }))
 app.use(cors())
 
+app.use(express.static(path.join(__dirname,'/frontend/build')))
+
+
 mongoose
     .connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
@@ -22,6 +25,18 @@ mongoose
     .catch((err) => console.log("NOT CONNECTED TO NETWORK", err))
 
 app.use('/', Routes);
+
+// Catch-all handler for serving index.html
+if(process.env.NODE_ENV === 'PRODUCTION'){
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'), (err) => {
+          if (err) {
+            res.status(500).send(err);
+          }
+        });
+      });
+    
+}
 
 app.listen(PORT, () => {
     console.log(`Server started at port no. ${PORT}`)

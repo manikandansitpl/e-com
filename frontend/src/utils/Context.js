@@ -19,6 +19,7 @@ const ContextWrapper = ({ children }) => {
     const [globalDataFilter, setGlobalDataFilter] = useState(null);
     const [filterApikey,setfilterdApiKey] = useState("");
     const [globalApiLink,setGlobalApiLink] = useState("");
+    const [selectedImageForProductView,setselectedImageForProductView] = useState("");
 
 
     let props = {selectedBrands, selectedColors, selectedRatings, selectedDiscount, selectedPrice,selectedSubCategory};
@@ -71,7 +72,8 @@ const ContextWrapper = ({ children }) => {
             globalDataFilter, setGlobalDataFilter,
             props,
             filterApikey,
-            globalApiLink,setGlobalApiLink
+            globalApiLink,setGlobalApiLink,
+            selectedImageForProductView,setselectedImageForProductView
         }}>
             {children}
         </ContextProvider.Provider>
