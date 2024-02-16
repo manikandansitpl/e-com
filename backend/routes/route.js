@@ -50,11 +50,11 @@ router.get('/getProductFilter', getProductFilter);
 
 // Product
 router.post('/ProductCreate', productCreate);
-router.get('/getSellerProducts/:id', getSellerProducts);
+router.get('/Seller/getSellerProducts/:id', getSellerProducts);
 router.get('/getProducts', getProducts);
 router.get('/getProductDetail/:id', getProductDetail);
 router.get('/getInterestedCustomers/:id', getInterestedCustomers);
-router.get('/getAddedToCartProducts/:id', getAddedToCartProducts);
+router.get('/Seller/getAddedToCartProducts/:id', getAddedToCartProducts);
 
 router.put('/ProductUpdate/:id', updateProduct);
 router.put('/addReview/:id', addReview);

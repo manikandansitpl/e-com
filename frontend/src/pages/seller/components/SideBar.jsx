@@ -63,10 +63,8 @@ const SideBar = () => {
             <Divider sx={{ my: 1 }} />
             <React.Fragment>
                 <ListItemButton
-                    // component={Link} to="/Seller/profile"
-                    // sx={location.pathname.startsWith('/Seller/profile') ? styles.currentStyle : styles.normalStyle}
-                    component={Link} to="/profile"
-                    sx={location.pathname.startsWith('/profile') ? styles.currentStyle : styles.normalStyle}
+                    component={Link} to="/Seller/profile"
+                    sx={location.pathname.startsWith('/Seller/profile') ? styles.currentStyle : styles.normalStyle}
                 >
                     <ListItemIcon>
                         <AccountCircleIcon sx={{ color: location.pathname.startsWith("/Seller/profile") ? '#4d1c9c' : 'inherit' }} />
