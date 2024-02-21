@@ -28,7 +28,7 @@ import {
     setFilteredProductsFilterPage,
 } from './userSlice';
 
-const BaseUrl = "http://localhost:5000";
+const BaseUrl = "http://localhost:5000/api/v2/";
 
 export const authUser = (fields, role, mode) => async (dispatch) => {
     dispatch(authRequest());
