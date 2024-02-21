@@ -28,11 +28,13 @@ import {
     setFilteredProductsFilterPage,
 } from './userSlice';
 
+const BaseUrl = "http://localhost:5000";
+
 export const authUser = (fields, role, mode) => async (dispatch) => {
     dispatch(authRequest());
 
     try {
-        const result = await axios.post(`${role}${mode}`, fields, {
+        const result = await axios.post(`${BaseUrl}/${role}${mode}`, fields, {
             headers: { 'Content-Type': 'application/json' },
         });
         if (result.data.role) {
@@ -50,7 +52,7 @@ export const addStuff = (address, fields) => async (dispatch) => {
     dispatch(authRequest());
 
     try {
-        const result = await axios.post(`${address}`, fields, {
+        const result = await axios.post(`${BaseUrl}/${address}`, fields, {
             headers: { 'Content-Type': 'application/json' },
         });
 
@@ -67,7 +69,7 @@ export const addStuff = (address, fields) => async (dispatch) => {
 export const updateStuff = (fields, id, address) => async (dispatch) => {
 
     try {
-        const result = await axios.put(`${address}/${id}`, fields, {
+        const result = await axios.put(`${BaseUrl}/${address}/${id}`, fields, {
             headers: { 'Content-Type': 'application/json' },
         });
         if (result.data.message) {
@@ -86,7 +88,7 @@ export const deleteStuff = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.delete(`${address}/${id}`);
+        const result = await axios.delete(`${BaseUrl}/${address}/${id}`);
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
         } else {
@@ -104,7 +106,7 @@ export const updateCustomer = (fields, id) => async (dispatch) => {
     delete newFields.token;
 
     try {
-        await axios.put(`CustomerUpdate/${id}`, newFields, {
+        await axios.put(`${BaseUrl}/CustomerUpdate/${id}`, newFields, {
             headers: { 'Content-Type': 'application/json' },
         });
 
@@ -119,7 +121,7 @@ export const getProductsbySeller = (id) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`getSellerProducts/${id}`);
+        const result = await axios.get(`${BaseUrl}/getSellerProducts/${id}`);
         if (result.data.message) {
             dispatch(getSellerProductsFailed(result.data.message));
         }
@@ -135,7 +137,7 @@ export const getProducts = () => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`getProducts`);
+        const result = await axios.get(`${BaseUrl}/getProducts`);
         if (result.data.message) {
             dispatch(getProductsFailed(result.data.message));
             dispatch(setFilteredProductsFilterPage(result.data.message));
@@ -153,7 +155,7 @@ export const getProductDetails = (id) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`getProductDetail/${id}`);
+        const result = await axios.get(`${BaseUrl}/getProductDetail/${id}`);
         if (result.data.message) {
             dispatch(getProductDetailsFailed(result.data.message));
         }
@@ -170,7 +172,7 @@ export const getCustomers = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${address}/${id}`);
+        const result = await axios.get(`${BaseUrl}/${address}/${id}`);
         if (result.data.message) {
             dispatch(getCustomersListFailed(result.data.message));
         }
@@ -186,7 +188,7 @@ export const getCustomers = (id, address) => async (dispatch) => {
 export const getSpecificProducts = (id, address) => async (dispatch) => {
     dispatch(getRequest());
     try {
-        const result = await axios.get(`${address}/${id}`);
+        const result = await axios.get(`${BaseUrl}/${address}/${id}`);
         if (result.data.message) {
             dispatch(getSpecificProductsFailed(result.data.message));
         }
@@ -203,7 +205,7 @@ export const getSearchedProducts = (address, key) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${address}/${key}`);
+        const result = await axios.get(`${BaseUrl}/${address}/${key}`);
         if (result.data.message) {
             dispatch(getSearchFailed(result.data.message));
         }
@@ -224,7 +226,7 @@ export const getSearchedProductFilerPage = (address, key) => async (dispatch) =>
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${address}/${key}`);
+        const result = await axios.get(`${BaseUrl}/${address}/${key}`);
         if (result.data.message) {
             dispatch(setFilteredProductsFilterPage(result.data.message));
         }
@@ -243,7 +245,7 @@ export const getSearchedProductsSearchBar = (address, key) => async (dispatch) =
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${address}/${key}`);
+        const result = await axios.get(`${BaseUrl}/${address}/${key}`);
         if (result.data.message) {
             dispatch(setFilteredProductsSearch(result.data.message));
         }
@@ -261,7 +263,7 @@ export const getCommonSearchedProductsSearchBar = (address, key) => async (dispa
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${address}/${key}`);
+        const result = await axios.get(`${BaseUrl}/${address}/${key}`);
         if (result.data.message) {
             dispatch(setFilteredProductsFilterPage(result.data.message));
         }

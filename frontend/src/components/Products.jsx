@@ -126,10 +126,11 @@ let product = searchParams.get('product');
 
   useEffect(()=>{
     getFilterdProd(id ,product);
+    
+  return()=>{
+    dispatch(getSearchedProducts("searchProduct", title));
+  }
   },[])
-useEffect(()=>{
-  dispatch(getSearchedProducts("searchProduct", title));
-},[title])
 
   return (
     <>

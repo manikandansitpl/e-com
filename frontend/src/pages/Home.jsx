@@ -7,6 +7,7 @@ import { getProducts } from '../redux/userHandle';
 import ProductsMenu from './customer/components/ProductsMenu';
 import { NewtonsCradle } from '@uiball/loaders';
 import { Link } from 'react-router-dom';
+import { setFilteredProducts, setFilteredProductsFilterPage } from '../redux/userSlice';
 
 const Home = () => {
   const adURL =
@@ -27,10 +28,11 @@ const Home = () => {
         setShowNetworkError(true);
       }, 40000);
 
-      return () => clearTimeout(timeoutId);
+      return () =>{ clearTimeout(timeoutId);dispatch(setFilteredProductsFilterPage(""))}
     }
   }, [error]);
 
+  
   return (
     <div id="top">
       <Container

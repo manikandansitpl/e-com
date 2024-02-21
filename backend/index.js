@@ -26,18 +26,18 @@ mongoose
 app.use('/', Routes);
 
 // Catch-all handler for serving index.html
-if(process.env.NODE_ENV === 'PRODUCTION'){
-app.use(express.static(path.join(__dirname,'../frontend/build')))
+// if(process.env.NODE_ENV === 'PRODUCTION'){
+// app.use(express.static(path.join(__dirname,'../frontend/build')))
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'), (err) => {
-          if (err) {
-            res.status(500).send(err);
-          }
-        });
-      });
+//     app.get('*', (req, res) => {
+//         res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'), (err) => {
+//           if (err) {
+//             res.status(500).send(err);
+//           }
+//         });
+//       });
     
-}
+// }
 
 app.listen(PORT, () => {
     console.log(`Server started at port no. ${PORT}`)
