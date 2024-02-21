@@ -28,13 +28,12 @@ import {
     setFilteredProductsFilterPage,
 } from './userSlice';
 
-const BaseUrl = "http://localhost:5000/api/v2/";
 
 export const authUser = (fields, role, mode) => async (dispatch) => {
     dispatch(authRequest());
 
     try {
-        const result = await axios.post(`${BaseUrl}/${role}${mode}`, fields, {
+        const result = await axios.post(`/api/v2/${role}${mode}`, fields, {
             headers: { 'Content-Type': 'application/json' },
         });
         if (result.data.role) {
@@ -52,7 +51,7 @@ export const addStuff = (address, fields) => async (dispatch) => {
     dispatch(authRequest());
 
     try {
-        const result = await axios.post(`${BaseUrl}/${address}`, fields, {
+        const result = await axios.post(`/api/v2/${address}`, fields, {
             headers: { 'Content-Type': 'application/json' },
         });
 
@@ -69,7 +68,7 @@ export const addStuff = (address, fields) => async (dispatch) => {
 export const updateStuff = (fields, id, address) => async (dispatch) => {
 
     try {
-        const result = await axios.put(`${BaseUrl}/${address}/${id}`, fields, {
+        const result = await axios.put(`/api/v2/${address}/${id}`, fields, {
             headers: { 'Content-Type': 'application/json' },
         });
         if (result.data.message) {
@@ -88,7 +87,7 @@ export const deleteStuff = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.delete(`${BaseUrl}/${address}/${id}`);
+        const result = await axios.delete(`/api/v2/${address}/${id}`);
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
         } else {
@@ -106,7 +105,7 @@ export const updateCustomer = (fields, id) => async (dispatch) => {
     delete newFields.token;
 
     try {
-        await axios.put(`${BaseUrl}/CustomerUpdate/${id}`, newFields, {
+        await axios.put(`/api/v2/CustomerUpdate/${id}`, newFields, {
             headers: { 'Content-Type': 'application/json' },
         });
 
@@ -121,7 +120,7 @@ export const getProductsbySeller = (id) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${BaseUrl}/getSellerProducts/${id}`);
+        const result = await axios.get(`/api/v2/getSellerProducts/${id}`);
         if (result.data.message) {
             dispatch(getSellerProductsFailed(result.data.message));
         }
@@ -137,7 +136,7 @@ export const getProducts = () => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${BaseUrl}/getProducts`);
+        const result = await axios.get(`/api/v2/getProducts`);
         if (result.data.message) {
             dispatch(getProductsFailed(result.data.message));
             dispatch(setFilteredProductsFilterPage(result.data.message));
@@ -155,7 +154,7 @@ export const getProductDetails = (id) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${BaseUrl}/getProductDetail/${id}`);
+        const result = await axios.get(`/api/v2/getProductDetail/${id}`);
         if (result.data.message) {
             dispatch(getProductDetailsFailed(result.data.message));
         }
@@ -172,7 +171,7 @@ export const getCustomers = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${BaseUrl}/${address}/${id}`);
+        const result = await axios.get(`/api/v2/${address}/${id}`);
         if (result.data.message) {
             dispatch(getCustomersListFailed(result.data.message));
         }
@@ -188,7 +187,7 @@ export const getCustomers = (id, address) => async (dispatch) => {
 export const getSpecificProducts = (id, address) => async (dispatch) => {
     dispatch(getRequest());
     try {
-        const result = await axios.get(`${BaseUrl}/${address}/${id}`);
+        const result = await axios.get(`/api/v2/${address}/${id}`);
         if (result.data.message) {
             dispatch(getSpecificProductsFailed(result.data.message));
         }
@@ -205,7 +204,7 @@ export const getSearchedProducts = (address, key) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${BaseUrl}/${address}/${key}`);
+        const result = await axios.get(`/api/v2/${address}/${key}`);
         if (result.data.message) {
             dispatch(getSearchFailed(result.data.message));
         }
@@ -226,7 +225,7 @@ export const getSearchedProductFilerPage = (address, key) => async (dispatch) =>
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${BaseUrl}/${address}/${key}`);
+        const result = await axios.get(`/api/v2/${address}/${key}`);
         if (result.data.message) {
             dispatch(setFilteredProductsFilterPage(result.data.message));
         }
@@ -245,7 +244,7 @@ export const getSearchedProductsSearchBar = (address, key) => async (dispatch) =
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${BaseUrl}/${address}/${key}`);
+        const result = await axios.get(`/api/v2/${address}/${key}`);
         if (result.data.message) {
             dispatch(setFilteredProductsSearch(result.data.message));
         }
@@ -263,7 +262,7 @@ export const getCommonSearchedProductsSearchBar = (address, key) => async (dispa
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${BaseUrl}/${address}/${key}`);
+        const result = await axios.get(`/api/v2/${address}/${key}`);
         if (result.data.message) {
             dispatch(setFilteredProductsFilterPage(result.data.message));
         }
