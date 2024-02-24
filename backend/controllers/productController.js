@@ -29,7 +29,7 @@ const getProducts = async (req, res) => {
 const getProductFilter = async (req, res) => {
     // Extract query parameters if they exist; otherwise set to undefined
 
-    const {id, brand, color, subcategory, cost ,rating} = req.query;
+    const {id, brand, color, subcategory, cost ,rating,title} = req.query;
     // Initialize the query conditions array
     let queryConditions = [];
 
@@ -63,6 +63,10 @@ const getProductFilter = async (req, res) => {
 
     if(id){
         queryConditions.push({_id:id})
+    }
+
+    if(title){
+        queryConditions.push({title:title})
     }
 
     // Construct the final query using $and only if there are conditions to apply

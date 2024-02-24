@@ -21,10 +21,12 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-  const { isLoggedIn, currentToken, currentRole, productData } = useSelector(state => state.user);
+  const { isLoggedIn, currentToken, currentRole,productData, filteredProductsfilterPage } = useSelector(state => state.user);
 
   useEffect(() => {
-    dispatch(getProducts());
+    if(filteredProductsfilterPage?.length >0){
+      dispatch(getProducts());
+    }
 
     if (currentToken) {
       dispatch(isTokenValid());

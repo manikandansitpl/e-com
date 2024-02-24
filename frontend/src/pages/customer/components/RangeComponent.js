@@ -12,7 +12,8 @@ function mapValueToAmount(value) {
   return Math.round(amount);
 }
 
-export default function RangeSlider() {
+// Wrapping the functional component with React.memo
+const RangeSlider = React.memo(() => {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState([1, 100]);
   const [amount, setAmount] = React.useState([10, 500000]);
@@ -22,28 +23,23 @@ export default function RangeSlider() {
     setValue(newValue);
     const newAmounts = newValue.map(mapValueToAmount);
     setAmount(newAmounts);
-    setselectedPrice(newAmounts); // Assuming this function correctly updates part of the global state
+    setselectedPrice(newAmounts);
   };
 
   React.useEffect(() => {
     const cost = selectedPrice?.join("-");
-    // Assuming you have a function to update just the cost part of your globalApiLink correctly
-    const newGlobalApiLink = updateGlobalApiLinkWithCost(globalApiLink, cost); // Implement this function
+    const newGlobalApiLink = updateGlobalApiLinkWithCost(globalApiLink, cost);
     setGlobalApiLink(newGlobalApiLink);
     console.log(newGlobalApiLink);
     if(newGlobalApiLink.toString() !== '&cost='){
       dispatch(getCommonSearchedProductsSearchBar('getProductFilter', newGlobalApiLink));
     }
-  }, [selectedPrice, globalApiLink, setGlobalApiLink, dispatch]);
+  }, [selectedPrice]);
 
-  // A function to correctly update the globalApiLink with the new cost, removing old cost values
   function updateGlobalApiLinkWithCost(apiLink, cost) {
-    // Split the existing apiLink by '&' to filter out any existing cost parameter
     const parts = apiLink.split('&').filter(part => !part.startsWith('cost='));
-    // Rejoin the parts and append the new cost parameter
     return `${parts.join('&')}&cost=${cost}`;
   }
-
 
   return (
     <Box sx={{ width: '95%', zIndex: '1', marginLeft: '8px' }}>
@@ -61,4 +57,6 @@ export default function RangeSlider() {
       </Box>
     </Box>
   );
-}
+});
+
+export default RangeSlider;

@@ -91,7 +91,7 @@ const Slide = memo(({ products, title }) => {
                         return (
                             <Box key={index}>
                                 <Box className='sliderContent' textAlign="center" style={{ padding: '25px 15px' }}>
-                                    <Link onClick={()=>{dispatch(setFilteredProductsFilterPage(""));dispatch(getSearchedProducts("searchProduct", title));}} to={`/Products?title=${title}`} style={{ textDecoration: 'none' }}>
+                                    <Link onClick={()=>{dispatch(setFilteredProductsFilterPage(""))}} to={`/Products?title=${title}`} style={{ textDecoration: 'none' }}>
                                         <Image src={product.productImage} />
                                         <TitleText style={{ fontWeight: 600, color: '#212121' }}>{product.productName}</TitleText>
                                         <TextContainer>

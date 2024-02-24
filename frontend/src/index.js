@@ -7,11 +7,11 @@ import store from './redux/store.js';
 import ContextWrapper from './utils/Context.js';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <>
     <Provider store={store}>
       <ContextWrapper>
       <App />
       </ContextWrapper>
     </Provider>
-  </React.StrictMode>,
+  </>,
 )

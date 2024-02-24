@@ -21,7 +21,12 @@ export default ImageList;
 
 const ImageContainer = styled.div`
 display:flex;
-flex-direction:column
+flex-direction:column;
+@media (max-width: 768px) {
+  flex-direction: row;
+  justify-content:space-around;
+align-items:center;
+}
 `
 const ImageComponent = styled.img`
 width:100px;
@@ -31,5 +36,9 @@ margin-top:5px;
 &:hover{
     border:1px solid blue;
     margin-top:5px;
+}
+@media (max-width: 768px) {
+  width:80px;
+height:80px;
 }
 `

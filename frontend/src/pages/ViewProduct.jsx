@@ -220,6 +220,9 @@ height:auto
 `
 const InnerImageContainer= styled.div`
 display:flex;
+@media (max-width: 768px) {
+    flex-direction: column-reverse;
+}
 `
 
 const ProductImage = styled.img`
@@ -232,6 +235,9 @@ const ProductInfo = styled.div`
     display: flex;
     flex-direction: column;
     width:60%
+    @media (max-width: 768px) {
+        width:100%;
+    }
 `;
 
 const ProductName = styled.h1`
@@ -368,6 +374,10 @@ cursor:pointer;
 const ButtonMainContainer = styled.div`
 display:flex;
 margin-left: 100px;
+display:flex;
+@media (max-width: 768px) {
+    width:100%;
+}
 `
 const BasicButton = styled.button`
   && {
