@@ -33,9 +33,9 @@ const Cart = ({ setIsCartOpen }) => {
     };
 
 
-    const totalQuantity = cartDetails.reduce((total, item) => total + item.quantity, 0);
-    const totalOGPrice = cartDetails.reduce((total, item) => total + (item.quantity * item.price.mrp), 0);
-    const totalNewPrice = cartDetails.reduce((total, item) => total + (item.quantity * item.price.cost), 0);
+    const totalQuantity = cartDetails?.reduce((total, item) => total + item?.quantity, 0);
+    const totalOGPrice = cartDetails?.reduce((total, item) => total + (item?.quantity * item?.price?.mrp), 0);
+    const totalNewPrice = cartDetails?.reduce((total, item) => total + (item?.quantity * item?.price?.cost), 0);
 
     const productViewHandler = (productID) => {
         navigate("/product/view/" + productID)
@@ -98,25 +98,25 @@ const Cart = ({ setIsCartOpen }) => {
                             ref={index === 0 ? firstCartItemRef : null}
                         >
                             <CartItem>
-                                <ProductImage src={data.productImage} />
+                                <ProductImage src={data?.productImage} />
                                 <ProductDetails>
                                     <Typography variant="h6">
-                                        {data.productName}
+                                        {data?.productName}
                                     </Typography>
                                     <Typography variant="subtitle2">
-                                        Original Price: ₹{data.price.mrp}
+                                        Original Price: ₹{data?.price?.mrp}
                                     </Typography>
                                     <Typography variant="subtitle2">
-                                        Discount: {data.price.discountPercent}% Off
+                                        Discount: {data?.price?.discountPercent}% Off
                                     </Typography>
                                     <Typography variant="subtitle2">
-                                        Final Price: ₹{data.price.cost}
+                                        Final Price: ₹{data?.price?.cost}
                                     </Typography>
                                     <Typography variant="subtitle2">
-                                        Quantity: {data.quantity}
+                                        Quantity: {data?.quantity}
                                     </Typography>
                                     <Typography variant="subtitle2">
-                                        Total: ₹{data.quantity * data.price.cost}
+                                        Total: ₹{data?.quantity * data?.price?.cost}
                                     </Typography>
                                     <ButtonContainer>
                                         <Button
